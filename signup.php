@@ -13,22 +13,22 @@
 
       <h1>SplitIt</h1>
 
-      <form action="./includes/validation.php" method="post">
+      <form action="./includes/validationSignup.php" method="post">
 
         <label for="email">  Please enter your email address:
 
-          <input type="text" name="email" id="email">
+          <input type="text" name="email" id="email" required>
 
         </label>
         <label for="username"> Please Enter your name:
-          <input type="text" name="username" id="username"> 
+          <input type="text" name="username" id="username" required> 
         </label>
         <label> Password
-          <input type="password" name="password" id="password">
+          <input type="password" name="password" id="password" required>
         </label>
 
         <button type="submit">Submit</button>
-        <button>Login</button>
+        <button><a href="./login.php">Login</a></button>
 
       </form>
 
