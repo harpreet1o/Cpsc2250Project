@@ -1,5 +1,10 @@
 <?php
 session_start();
+if (!isset($_SESSION['username'])) {
+    // If not, redirect to the login page
+    header("Location: login.php");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +16,7 @@ session_start();
 <body>
     
 <form method="post" action="./includes/validationForGroup.php">
-        <label for="groupName">Email</label>
+        <label for="groupName">Group Name</label>
         <input type="text" name="groupName" id="groupName" required>
         <button type="submit">Submit</button>
 </body>
