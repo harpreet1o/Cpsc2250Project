@@ -9,8 +9,7 @@ function validate() {
 
     
 
-        $groupName = $_POST['groupName'];
-        
+        $groupName = $_POST['groupName'];      
         if (!empty($groupName)) {
             try {
                 // Insert group name into the 'groups' table
@@ -23,18 +22,18 @@ function validate() {
                 $group_id = $pdo->lastInsertId();
 
                 // Ensure the session user is set
-                if (!isset($_SESSION['user'])) {
+                if (!isset($_SESSION['userId'])) {
                     throw new Exception('User ID not set in session');
                 }
 
                 // Insert into the user_group table
-                $query2 = "INSERT INTO user_group (user_id, group_id) VALUES (:userId, :groupId)";
+                $query2 = "INSERT INTO user_group (userId, groupId) VALUES (:userId, :groupId)";
                 $stmt2 = $pdo->prepare($query2);
-                $stmt2->bindParam(':userId', $_SESSION['user']);
+                $stmt2->bindParam(':userId', $_SESSION['userId']);
                 $stmt2->bindParam(':groupId', $group_id);
                 $stmt2->execute();
 
-                echo 'New group_id: ' . $group_id;
+                
             } catch (PDOException $e) {
                 echo "Database error: " . $e->getMessage();
             } catch (Exception $e) {
@@ -45,3 +44,4 @@ function validate() {
         }
     }
 }
+validate();
