@@ -3,7 +3,7 @@ session_start();
 if (!isset($_SESSION['username'])) {
     // If not, redirect to the login page
     header("Location: login.php");
-    exit();
+    exit();
 }
 ?>
 
