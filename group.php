@@ -11,8 +11,11 @@ session_start();
 <body>
     
 <form method="post" action="./includes/validationForGroup.php">
-        <label for="groupName">Email</label>
+        <label for="groupName">group name</label>
         <input type="text" name="groupName" id="groupName" required>
+        <!-- <label for="groupName">invite the users</label>
+        <input type="text"> -->
+        
         <button type="submit">Submit</button>
 </body>
 </html>
