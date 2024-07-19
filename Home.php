@@ -13,7 +13,7 @@ if ($pdo === null) {
 }
 
 // Updated SQL query to reflect the new database schema
-$sql = "SELECT u.userId, u.username, g.groupName 
+$sql = "SELECT u.userId, u.username, g.groupId, g.groupName 
         FROM user u
         JOIN user_group ug ON u.userId = ug.userId
         JOIN groups g ON ug.groupId = g.groupId";
@@ -44,7 +44,7 @@ try {
     if (!empty($rows)) {
         echo "<ul>";
         foreach ($rows as $row) {
-            echo "<li>UserID: " . htmlspecialchars($row["userId"]) . " - Username: " . htmlspecialchars($row["username"]) . " - Group Name: " . htmlspecialchars($row["groupName"]) . "</li>";
+            echo "<li>UserID: " . htmlspecialchars($row["userId"]) . " - Username: " . htmlspecialchars($row["username"]) . " - Group Name: <a href='group.php?id=" . htmlspecialchars($row["groupId"]) . "'>" . htmlspecialchars($row["groupName"]) . "</a></li>";
         }
         echo "</ul>";
     } else {
