@@ -5,7 +5,7 @@ function validate() {
         session_start();
         
         // Ensure the correct path to the database connection file
-        include_once "database.inc.php";
+        include_once "./database.inc.php";
 
     
 
@@ -32,12 +32,14 @@ function validate() {
                 $stmt2->bindParam(':userId', $_SESSION['userId']);
                 $stmt2->bindParam(':groupId', $group_id);
                 $stmt2->execute();
-
+                header("Location: ../Home.php");    
                 
             } catch (PDOException $e) {
                 echo "Database error: " . $e->getMessage();
+                header("Location: ../Home.php?error=DatabaseError");
             } catch (Exception $e) {
                 echo "Error: " . $e->getMessage();
+                header("Location: ../Home.php?error=machudayo");
             }
         } else {
             echo "Group name cannot be empty";
