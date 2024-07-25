@@ -44,7 +44,7 @@ try {
     if (!empty($rows)) {
         echo "<ul>";
         foreach ($rows as $row) {
-            echo "<li>UserID: " . htmlspecialchars($row["userId"]) . " - Username: " . htmlspecialchars($row["username"]) . " - Group Name: <a href='group.php?id=" . htmlspecialchars($row["groupId"]) . "'>" . htmlspecialchars($row["groupName"]) . "</a></li>";
+            echo "<li>UserID: " . htmlspecialchars($row["userId"]) . " - Username: " . htmlspecialchars($row["username"]) . " - Group Name: <a href='group.php?groupId=" . htmlspecialchars($row["groupId"]) . "'>" . htmlspecialchars($row["groupName"]) . "</a></li>";
         }
         echo "</ul>";
     } else {

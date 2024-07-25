@@ -18,3 +18,13 @@ CREATE TABLE user_group (
     FOREIGN KEY (userId) REFERENCES user(userId) ON DELETE CASCADE,
     FOREIGN KEY (groupId) REFERENCES groups(groupId) ON DELETE CASCADE
 );
+CREATE TABLE expenses (
+    expenseId INT AUTO_INCREMENT PRIMARY KEY,
+    groupId INT,
+    userId INT,
+    amount DECIMAL(10, 2) NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    FOREIGN KEY (groupId) REFERENCES groups(groupId) ON DELETE CASCADE,
+    FOREIGN KEY (userId) REFERENCES user(userId) ON DELETE CASCADE
+);
+
