@@ -23,8 +23,24 @@ CREATE TABLE expenses (
     groupId INT,
     userId INT,
     amount DECIMAL(10, 2) NOT NULL,
-    description VARCHAR(255) NOT NULL,
+    descriptione VARCHAR(255) NOT NULL,
     FOREIGN KEY (groupId) REFERENCES groups(groupId) ON DELETE CASCADE,
     FOREIGN KEY (userId) REFERENCES user(userId) ON DELETE CASCADE
 );
+CREATE TABLE expense_shares (
+    shareId INT AUTO_INCREMENT PRIMARY KEY,
+    expenseId INT,
+    userId INT,
+    amountOwed DECIMAL(10, 2) NOT NULL DEFAULT 0,
+    FOREIGN KEY (expenseId) REFERENCES expenses(expenseId) ON DELETE CASCADE,
+    FOREIGN KEY (userId) REFERENCES user(userId) ON DELETE CASCADE
+);
 
+CREATE TABLE group_list (
+    listId INT AUTO_INCREMENT PRIMARY KEY,
+    groupId INT,
+    createdBy VARCHAR(255) NOT NULL,
+    completedBy VARCHAR(255) ,
+    ItemName VARCHAR(255) NOT NULL,
+    FOREIGN KEY (groupId) REFERENCES groups(groupId) ON DELETE CASCADE
+);

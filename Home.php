@@ -13,19 +13,20 @@ if ($pdo === null) {
 }
 
 // Updated SQL query to reflect the new database schema
-$sql = "SELECT u.userId, u.username, g.groupId, g.groupName 
-        FROM user u
-        JOIN user_group ug ON u.userId = ug.userId
-        JOIN groups g ON ug.groupId = g.groupId";
 
 try {
+    $sql = "SELECT g.groupName, g.groupId
+        FROM user_group ug
+        JOIN groups g ON ug.groupId = g.groupId
+        WHERE ug.userId=:userId";
     $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':userId', $_SESSION['userId']);
     $stmt->execute();
 
-    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $Groups = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
-    $rows = [];
+    $Groups = [];
 }
 
 ?>
@@ -38,13 +39,13 @@ try {
 </head>
 <body>
     <h1>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h1>
-    <button><a href="./group.php">Create a new Group</a></button>
+    <button><a href="./createGroup.php">Create a new Group</a></button>
 
     <?php
-    if (!empty($rows)) {
+    if (!empty($Groups)) {
         echo "<ul>";
-        foreach ($rows as $row) {
-            echo "<li>UserID: " . htmlspecialchars($row["userId"]) . " - Username: " . htmlspecialchars($row["username"]) . " - Group Name: <a href='group.php?groupId=" . htmlspecialchars($row["groupId"]) . "'>" . htmlspecialchars($row["groupName"]) . "</a></li>";
+        foreach ($Groups as $group) {
+            echo " - Group Name: <a href='group.php?groupId=$group[groupId]&groupName=$group[groupName]'>" . htmlspecialchars($group["groupName"]) . "</a></li>";
         }
         echo "</ul>";
     } else {
