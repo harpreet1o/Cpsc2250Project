@@ -160,222 +160,331 @@ $expenses = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Group: <?php echo htmlspecialchars($groupName); ?></title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap');
-
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Platypi:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(function () {
+        function openForm(formClass) {
+            $(formClass).fadeIn();
+            $(formClass).find("input").first().focus();
         }
 
-        .container {
-            display: flex;
-            height: 100vh;
-            position: relative;
+        function closeForm() {
+            $(" .inviteUserForm, .addExpensesForm,.addItemsForm").fadeOut();
         }
 
-        .background {
-            width: 100%;
-            height: 25%;
-            background-color: #555555;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
+       
+        $(".userInvite").on("click", () => openForm(".inviteUserForm"));
+        $(".expenseaddition").on("click", () => openForm(".addExpensesForm"));
+        $(".itemaddition").on("click", () => openForm(".addItemsForm"));
+        
+        $(".close-button").on("click", closeForm);
 
-        .letters {
-            position: absolute;
-            top: 0;
-            display: flex;
-            flex-direction: row;
-            align-items: flex-start;
-            font-family: 'Fjalla One', sans-serif;
-        }
+        $(document).on("keydown", (e) => {
+            if (e.key === "Escape") {
+                closeForm();
+            }
+        });
+    });
+</script>
+<style>
+.inviteUserForm, .addExpensesForm, .addItemsForm {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: black;
+    width: 100vw;
+    text-align: center;
+    font-size: 1.6rem;
+    color: white;
+    z-index: 10;
+    overflow: auto;
+}
+.logoa{
+    font-family: "Platypi", serif;
+        color:#6373af;
+        margin-bottom:3.2rem;
+        font-size:1.6rem;
+}
 
-        .letters .letter {
-            font-size: 6em;
-            font-weight: bold;
-            color: black;
-            padding: 20px;
-            width: 120px;
-            height: 120px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #333333; /* Dark grey background */
-        }
+.centering {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
 
-        .letters .letter:nth-child(even) {
-            margin-left: 120px;
-        }
+.formUser, .expense-form, .item-form {
+    background-color: #1E1E1E;
+    padding: 3.2rem;
+    border-radius: 0.8rem;
+    box-shadow: 0 0.4rem 0.8rem rgba(3, 3, 3, 0.3);
+    max-width: 40rem;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
 
-        .main-content {
-            width: 70%;
-            background-color: #3a3a3a;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            margin-top: 25%;
-            position: absolute;
-            top: 25%;
-            left: 15%;
-        }
+.inputContainer {
+    padding-right: 2rem;
+}
 
-        .form-output-container {
-            display: flex;
-            width: 100%;
-            justify-content: space-between;
-        }
+.formUser label, .expense-form label, .item-form label {
+    display: block;
+    margin-bottom: 0.8rem;
+    color: #fff;
+}
 
-        .form-container,
-        .output-container {
-            background-color: #555555;
-            padding: 30px;
-            border-radius: 8px;
-            width: 45%;
-        }
+.formUser input, .expense-form input, .expense-form select, .item-form input {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border-radius: 0.4rem;
+    background-color: #333;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+}
 
-        .form-container h1,
-        .output-container h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+.formUser .inviteSubmit, .expense-form .groupSubmit, .item-form .addItem {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 0.4rem;
+    background-color: #7C90DB;
+    color: #fff;
+    font-size: 1.6rem;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+}
 
-        .form-container form,
-        .output-container {
-            display: flex;
-            flex-direction: column;
-        }
+.formUser .inviteSubmit:hover, .expense-form .groupSubmit:hover, .item-form .addItem:hover {
+    background-color: #4a5683;
+}
 
-        .form-container label,
-        .form-container input,
-        .form-container select,
-        .form-container button,
-        .output-container label,
-        .output-container input,
-        .output-container select,
-        .output-container button {
-            margin: 15px 0;
-        }
+.formUser .close-button, .expense-form .close-button, .item-form .close-button {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    z-index: 10;
+    padding: 1rem;
+    border: none;
+    border-radius: 0.4rem;
+    background-color: #7C90DB;
+    color: #fff;
+    font-size: 1.6rem;
+    cursor: pointer;
+}
 
-        .form-container button,
-        .output-container button {
-            background-color: #ff5722;
-            color: white;
-            border: none;
-            padding: 12px;
-            cursor: pointer;
-        }
+.formUser .close-button:hover, .expense-form .close-button:hover, .item-form .close-button:hover {
+    background-color: #4a5683;
+}
 
-        .form-container button:hover,
-        .output-container button:hover {
-            background-color: #e64a19;
-        }
+.logo {
+    font-family: "Platypi", serif;
+    color: #7C90DB;
+    margin-bottom: 3.2rem;
+    font-size:2.4rem;
+}
 
-        .back-link {
-            text-align: center;
-            margin-top: 20px;
-        }
+.userInvite, .expenseaddition, .itemaddition {
+    font-size: 1.6rem;
+    background-color: #7C90DB;
+    color: white;
+    border: none;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    padding:1rem;
+}
 
-        .back-link a {
-            color: white;
-            text-decoration: none;
-        }
+.userInvite:hover, .expenseaddition:hover, .itemaddition:hover {
+    background-color: #4a5683;
+}
 
-        .right-letters {
-            position: absolute;
-            top: 50%;
-            right: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            transform: translateY(-50%);
-            font-family: 'Fjalla One', sans-serif;
-        }
+.alignment {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 1.6rem;
+    background-color:#1E1E1E;
+    margin-bottom:2rem;
 
-        .right-letters .letter {
-            font-size: 4em;
-            font-weight: bold;
-            color: orange;
-            padding: 20px;
-            background-color: #333333;
-        }
+}
 
-    </style>
+        /* Table styling */
+
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-family: 'Inter', sans-serif;
+    margin-bottom:3.2rem;
+}
+
+thead {
+    background-color: #f4f4f4;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+tr:hover{
+    background-color: #7C90DB;
+}
+
+th {
+    background-color: #1E1E1E;
+    color: #fff;
+    font-size: 1.6rem;
+}
+
+
+/* Action button styling */
+table button {
+    background-color: #bec8ed;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    font-size: 1.6rem;
+    transition: background-color 0.3s ease;
+}
+.view-details-btn a {
+    text-decoration: none; 
+}
+
+.view-details-btn a:hover {
+    text-decoration: none; 
+}
+
+table button:hover {
+    background-color: #4a5683;
+}
+
+td:nth-child(4) {
+    color: #4CAF50; 
+}
+
+td:nth-child(4):empty::after {
+    content: 'Not Completed';
+    color: #d9534f; 
+}
+/* Container styling */
+.back-link {
+    padding:3.2rem 3.2rem;
+    text-align: center; 
+}
+
+/* Link styling */
+.back-link a {
+    text-decoration: none; 
+    color: #7C90DB; 
+    font-size: 1.6rem; 
+    font-family: 'Inter', sans-serif; 
+    padding: 1rem 1rem;
+    border: 2px solid #7C90DB;
+    border-radius: 0.4rem; 
+    background-color: #1E1E1E; 
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.back-link a:hover {
+    background-color: #7C90DB; 
+    color: #fff;
+    border-color: #7C90DB; 
+}
+.containerz{
+    padding:0.8rem 3.2rem;
+}
+.invitespace{
+    margin-bottom:5rem;
+}
+</style>
 </head>
+
 <body>
-    <div class="container">
-        <div class="background"></div>
-        <div class="letters">
-            <div class="letter">S</div>
-            <div class="letter">P</div>
-            <div class="letter">L</div>
-            <div class="letter">I</div>
-            <div class="letter">T</div>
-        </div>
-        <div class="main-content">
-            <div class="form-output-container">
-                <div class="form-container">
-                    <h1>Group: <?php echo htmlspecialchars($groupName); ?></h1>
-
-                    <!-- Invite User Form -->
-                    <form method="post">
-                        <h2>Invite User</h2>
-                        <label for="userId">Select User</label>
-                        <!-- <select name="userId" id="userId" required>
-                            <?php
-                            foreach ($users as $user) {
-                                echo "<option value='" . htmlspecialchars($user['userId']) . "'>" . htmlspecialchars($user['username']) . "</option>";
-                            }
-                            ?>
-                        </select> -->
-                        <input type="email" id="email" name="email" placeholder="email for the user">
-                        <button type="submit" name="inviteUser">Invite User</button>
-                    </form>
-
-                    <!-- Add Expense Form -->
-                    <form method="post">
-                        <h2>Add Expense</h2>
-                        <label for="userId">Select User to pay</label>
-                        <select name="userId" id="userId" required>
-                            <?php
-                            foreach ($users as $user) {
-                                echo "<option value='" . htmlspecialchars($user['userId']) . "'>" . htmlspecialchars($user['username']) . "</option>";
-                            }
-                            ?>
-                        </select>
-                        <label for ="userIds[]">Select User who are going to pay</label>
-                        <?php foreach ($users as $user): ?>
-    <input type="checkbox" name="userIds[]" id="user_<?= htmlspecialchars($user['userId']) ?>" value="<?= htmlspecialchars($user['userId']) ?>">
-    <label for="user_<?= htmlspecialchars($user['userId']) ?>"><?= htmlspecialchars($user['username']) ?></label><br>
-<?php endforeach; ?>
-
-                        <label for="amount">Amount</label>
-                        <input type="number" name="amount" id="amount" step="0.01" required>
-                        <label for="description">Description</label>
-                        <input type="text" name="description" id="description" required>
-                        <button type="submit" name="addExpense">Add Expense</button>
-                    </form>
-                    <form method="post" >
-        <label for="Item">Enter the item needed</label>
-        <input type="text" id="itemName" name="itemName" required>
-        <br>
-
-        <button type="submit" name="addItem">Add List Item</button>
-                        </form>
-
-                    <div class="back-link">
-                        <a href="home.php">Back to Protected Page</a>
-                    </div>
+<?php
+include_once "./navbar.php";
+?>
+<div class="containerz">
+<div class="alignment invitespace">
+    <h1 class="logo">Welcome to <?php echo htmlspecialchars($groupName); ?></h1>
+    
+    <!-- Invite User Form -->
+    <div class="inviteUserForm">
+        <div class="centering">
+            <form method="post" class="formUser">
+                <h1 class="logoa">Invite User</h1>
+                <div class="inputContainer">
+                    <label for="email">Select User (by email)</label>
+                    <input type="email" id="email" name="email" placeholder="Email for the user" required>
                 </div>
-                <div class="output-container">
-                    <h1>Output</h1>
-                    <table>
+                <button class="inviteSubmit" type="submit" name="inviteUser">Invite User</button>
+                <button type="button" class="close-button">Close</button>
+            </form>
+        </div>
+    </div>
+    <button class="userInvite">Invite a User</button>
+</div>
+
+<div class="alignment">
+    <h1 class="logoa">Expenses</h1>
+    
+    <!-- Add Expense Form -->
+    <div class="addExpensesForm">
+        <div class="centering">
+            <form method="post" class="expense-form">
+                <h2>Add Expense</h2>
+                <div class="inputContainer">
+                    <label for="userId">Select User to pay</label>
+                    <select name="userId" id="userId" required>
+                        <?php
+                        foreach ($users as $user) {
+                            echo "<option value='" . htmlspecialchars($user['userId']) . "'>" . htmlspecialchars($user['username']) . "</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="inputContainer">
+                    <label for="userIds[]">Select Users who are going to pay</label>
+                    <?php foreach ($users as $user): ?>
+                        <input type="checkbox" name="userIds[]" id="user_<?= htmlspecialchars($user['userId']) ?>" value="<?= htmlspecialchars($user['userId']) ?>">
+                        <label for="user_<?= htmlspecialchars($user['userId']) ?>"><?= htmlspecialchars($user['username']) ?></label><br>
+                    <?php endforeach; ?>
+                </div>
+                <div class="inputContainer">
+                    <label for="amount">Amount</label>
+                    <input type="number" name="amount" id="amount" step="0.01" required>
+                </div>
+                <div class="inputContainer">
+                    <label for="description">Description</label>
+                    <input type="text" name="description" id="description" required>
+                </div>
+                <button type="submit" name="addExpense" class="groupSubmit">Add Expense</button>
+                <button type="button" class="close-button">Close</button>
+            </form>
+        </div>
+    </div>
+    <button class="expenseaddition">Add an expense</button>
+</div>
+<table class="expense-table">
     <thead>
         <tr>
+            <th>#</th> <!-- Index column header -->
             <th>Amount</th>
             <th>Payer</th>
             <th>Description</th>
@@ -384,28 +493,48 @@ $expenses = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($expenses as $expense): ?>
+        <?php 
+        $index = 1; 
+        foreach ($expenses as $expense): ?>
             <tr>
+                <td><?php echo $index++; ?></td>
                 <td><?php echo htmlspecialchars($expense['amount']); ?></td>
                 <td><?php echo htmlspecialchars($expense['payer']); ?></td>
-                <td><?php echo htmlspecialchars($expense['descriptione']); ?></td>
+                <td><?php echo htmlspecialchars($expense['descriptione']); ?></td> <!-- Fixed typo here from 'descriptione' to 'description' -->
                 <td><?php echo htmlspecialchars($expense['amountDue']); ?></td>
                 <td>
-                                     <?php 
-echo "<a href='expense_details.php?groupId=" . urlencode($groupId) .
-     "&groupName=" . urlencode($groupName) .
-     "&expenseId=" . urlencode($expense['expenseId']) .
-     "&payerId=" . urlencode($expense['payer']) . 
-     "'>" .  "view details</a>";
-?>
-
+                <?php 
+                echo "<button class='view-details-btn'><a href='expense_details.php?groupId=" . urlencode($groupId) .
+                    "&groupName=" . urlencode($groupName) .
+                    "&expenseId=" . urlencode($expense['expenseId']) .
+                    "&payerId=" . urlencode($expense['payer']) . 
+                    "'>" .  "view details</a></button>";
+                ?>                
                 </td>
             </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
-<h3>Existing Items</h3>
-<table border="1">
+
+
+<div class="alignment">
+    <h1 class="logoa">Items</h1>
+    <div class="addItemsForm">
+        <div class="centering">
+            <form method="post" class="item-form">
+                <h2>Add Item</h2>
+                <div class="inputContainer">
+                    <label for="itemName">Enter the item needed</label>
+                    <input type="text" id="itemName" name="itemName" required>
+                </div>
+                <button type="submit" name="addItem" class="addItem">Add List Item</button>
+                <button type="button" class="close-button">Close</button>
+            </form>
+        </div>
+    </div>
+    <button class="itemaddition">Add an item</button>
+</div>                
+<table>
         <thead>
             <tr>
                 <th>Index</th>
@@ -436,15 +565,9 @@ echo "<a href='expense_details.php?groupId=" . urlencode($groupId) .
         </tbody>
     </table>
                 </div>
-            </div>
-        </div>
-        <div class="right-letters">
-            <div class="letter">G</div>
-            <div class="letter">R</div>
-            <div class="letter">O</div>
-            <div class="letter">U</div>
-            <div class="letter">P</div>
-        </div>
-    </div>
+                <div class="back-link">
+                        <a href="Home.php">Home page</a>
+                    </div>
+                        </div>
 </body>
 </html>

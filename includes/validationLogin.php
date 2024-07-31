@@ -27,6 +27,7 @@ function validate() {
                 if ( $result['email'] == $email_valid && $result['user_password'] == $password) {
                     $_SESSION['username']=$result['username'];
                     $_SESSION['userId']=$result['userId'];
+                    $_SESSION['mode']=false;
                     header("Location: ../home.php");
                     exit();
                 } else {

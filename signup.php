@@ -2,36 +2,42 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>SplitIt</title>
+    <title>baseManager</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Platypi:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/style.css">
   
   </head>
   <body>
 
-    <div class="wrapper">
+  <div class="formInput">
+  <form action="./includes/validationSignup.php" method="post" class="loginSignup">
+    <h1 class="logo">BaseManager</h1>
 
-      <h1>SplitIt</h1>
+    <div class="inputContainer">
+      <label for="email">Please enter your email address:</label>
+      <input type="text" name="email" id="email" placeholder="example@gmail.com" required>
+    </div>
 
-      <form action="./includes/validationSignup.php" method="post">
+    <div class="inputContainer">
+      <label for="username">Please Enter your name:</label>
+      <input type="text" name="username" id="username" placeholder="John" required>
+    </div>
 
-        <label for="email">  Please enter your email address:
+    <div class="inputContainer">
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" required>
+    </div>
 
-          <input type="text" name="email" id="email" required>
+    <button type="submit" class="form-button">Submit</button>
+    <div class="signup-button">
+      <a href="./login.php">Login</a>
+    </div>
+  </form>
+</div>
 
-        </label>
-        <label for="username"> Please Enter your name:
-          <input type="text" name="username" id="username" required> 
-        </label>
-        <label> Password
-          <input type="password" name="password" id="password" required>
-        </label>
-
-        <button type="submit">Submit</button>
-        <button><a href="./login.php">Login</a></button>
-
-      </form>
-
-      </div> 
   </body>
 </html>
